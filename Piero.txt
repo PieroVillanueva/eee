@@ -1,0 +1,79 @@
+--listar
+create procedure sp_listarCliente
+as 
+begin
+select * from Cliente
+where habilitado=1
+end
+
+exec  sp_listarCliente
+drop procedure sp_listarCliente
+
+--registrar
+create procedure sp_registrarCliente
+@dniCliente int ,
+@nombre varchar(50) ,
+@apellidoP varchar(50) ,
+@apellidoM varchar(50) ,
+@edad int ,
+@sexo char(1) ,
+@telefono int ,
+@correo varchar(30) ,
+@habilitado bit 
+as
+begin
+insert into Cliente (dniCliente,nombre,apellidoP,apellidoM,edad,sexo,telefono,correo,habilitado) 
+values(@dniCliente,@nombre,@apellidoP,@apellidoM,@edad,@sexo,@telefono,@correo,@habilitado)
+end 
+go	
+
+
+
+
+exec sp_registrarCliente '12345678','Pedro','Alvarez','Juarez','25','M','958675528','pedr@hotmail.com',true
+--buscar
+create procedure sp_buscarCliente
+@dniCliente int
+as
+begin
+select* from Cliente where dniCliente=@dniCliente
+end 
+go	
+
+exec sp_buscarCliente '12345678'
+
+--editar
+
+create procedure sp_editarCliente
+@dniCliente int ,
+@nombre varchar(50) ,
+@apellidoP varchar(50) ,
+@apellidoM varchar(50) ,
+@edad int ,
+@telefono int,
+@correo varchar(30)
+as
+begin
+update Cliente set
+nombre=@nombre,
+apellidoP=@apellidoP,
+apellidoM=@apellidoM,
+edad=@edad,
+telefono=@telefono,
+correo=@correo
+where dniCliente=@dniCliente
+end 
+go	
+
+
+--deshabilitar
+create procedure sp_deshabilitarCliente
+@dniCliente int
+as
+begin
+update Cliente set
+habilitado='0'
+where dniCliente=@dniCliente
+end 
+go	
+

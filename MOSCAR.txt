@@ -1,0 +1,67 @@
+create procedure sp_listarPropietario
+as 
+begin
+select * from Propietario
+end
+
+drop procedure sp_listarPropietario
+exec  sp_listarPropietario
+
+
+--registrar
+create procedure sp_registrarPropietario
+@dni int ,
+@nombre varchar(50) ,
+@apellidoP varchar(50) ,
+@apellidoM varchar(50) ,
+@edad int ,
+@sexo varchar(1) ,
+@telefono int ,
+@correo varchar(30) ,
+@direccion varchar(70) 
+as
+begin
+insert into Propietario(dni,nombre,apellidoP,apellidoM,edad,sexo,telefono,direccion,correo) 
+values(@dni,@nombre,@apellidoP,@apellidoM,@edad,@sexo,@telefono,@direccion,@correo)
+end 
+go
+
+
+exec sp_registrarPropietario '74185236','Anhalu','Alvez','Mendez','23','F','996635721','Urb.Los Jazmines N789','anhalu@hotmail.com'
+
+
+--buscar
+create procedure sp_buscarPropietario
+@dni int
+as
+begin
+select* from Propietario where dni=@dni
+end 
+go
+
+exec sp_buscarPropietario '74185236'
+
+--editar
+
+create procedure sp_editarPropietario
+@dni int ,
+@nombre varchar(50) ,
+@apellidoP varchar(50) ,
+@apellidoM varchar(50) ,
+@edad int,
+@telefono int,
+@correo varchar(30),
+@direccion varchar(70)
+as
+begin
+update Propietario set
+nombre=@nombre,
+apellidoP=@apellidoP,
+apellidoM=@apellidoM,
+edad=@edad,
+telefono=@telefono,
+direccion=@direccion,
+correo=@correo
+where dni=@dni
+end 
+go
